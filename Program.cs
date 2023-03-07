@@ -1,72 +1,131 @@
 ﻿using System;
-using Students;
-using Readers;
 
-namespace Students
+public class Animal
 {
-    class Student
+    public string name;
+    public string food;
+    public string location;
+
+    public Animal(string name, string food, string location)
     {
-        string name;
-        int groupId;
-        private int age;
+        this.name = name;
+        this.food = food;
+        this.location = location;
+    }
 
-        public Student(string name, int groupId, int age)
-        {
-            this.name = name;
-            this.groupId = groupId;
-            this.age = age;
-        }
+    public virtual void MakeNoise()
+    {
+        Console.WriteLine($"{name} шумит.");
+    }
 
-        public void Print() => Console.WriteLine($"Имя: {name}\nНомер группы: {groupId}\nВозраст: {age}");
+    public virtual void Eat()
+    {
+        Console.WriteLine($"{name} ест {food}.");
+
+    }
+
+    public virtual void Sleep()
+    {
+        Console.WriteLine($"{name} спит в {location}.");
     }
 }
 
-namespace Readers
+class Dog : Animal
 {
-    class Reader
+    bool collar;
+
+    public Dog(string name, string food, string location, bool collar) : base(name, food, location)
     {
-        private string FIO;
-        int number;
-        string faculty;
-        private string birthday;
+        this.name = name;
+        this.food = food;
+        this.location = location;
+        this.collar = collar;
+    }
 
-        public Reader(string FIO, int number, string faculty, string birthday)
-        {
-            this.FIO = FIO; 
-            this.number = number;
-            this.faculty = faculty;
-            this.birthday= birthday;
-        }
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"Собака {name} гавкает.");
+    }
 
-        public void takeBook(int bookCount) => Console.WriteLine($"{FIO} взял {bookCount} книги.");
+    public override void Eat()
+    {
+        Console.WriteLine($"Собака {name} ест {food}.");
 
-        public void takeBook(params string[] books)
-        {
-            string result = "";
+    }
 
-            foreach(string book in books)
-            {
-                result += $"{book},";
-            }
+    public override void Sleep()
+    {
+        Console.WriteLine($"Собака {name} спит в  {location}.");
 
-            Console.WriteLine($"{FIO} взял книги: {result.TrimEnd(',')}.");
-        }
+    }
+}
 
-        public void returnBook(int bookCount)
-        {
-            Console.WriteLine($"{FIO} вернул {bookCount} книги.");
-        }
+class Cat : Animal
+{
+    string CoatColor;
 
-        public void returnBook(params string[] books)
-        {
-            string result = "";
+    public Cat(string name, string food, string location, string coatColor) : base(name, food, location)
+    {
+        this.name = name;
+        this.food = food;
+        this.location = location;
+        this.CoatColor = coatColor;
+    }
 
-            foreach (string book in books)
-            {
-                result += $"{book},";
-            }
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"Кот {name} мяукает.");
+    }
 
-            Console.WriteLine($"{FIO} вернул книги: {result.TrimEnd(',')}.");
+    public override void Eat()
+    {
+        Console.WriteLine($"Кот {name} ест {food}.");
+
+    }
+
+    public override void Sleep()
+    {
+        Console.WriteLine($"Кот {name} спит в {location}.");
+
+    }
+}
+
+class Horse : Animal
+{
+    string owner;
+
+    public Horse(string name, string food, string location, string owner) : base(name, food, location)
+    {
+        this.name = name;
+        this.food = food;
+        this.location = location;
+        this.owner = owner;
+    }
+
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"Лошадь {name} издает звуки.");
+    }
+
+    public override void Eat()
+    {
+        Console.WriteLine($"Лошадь {name} ест {food}.");
+
+    }
+
+    public override void Sleep()
+    {
+        Console.WriteLine($"Лошадь {name} спит в {location}.");
+
+    }
+}
+
+class Veterinarian
+{
+    public void treatAnimal(params Animal[] animals)
+    {
+        foreach(Animal animal in animals){
+            Console.WriteLine($"Животное {animal.name}, живущее в {animal.location}, ест {animal.food}");
         }
     }
 }
@@ -75,23 +134,26 @@ public class Program
 {
     public static void Main()
     {
-        Student[] students = { new Student("Artem", 1, 15), 
-            new Student("Tom", 2, 16), 
-            new Student("Bob", 3, 17) 
-        };
+        Cat cat = new Cat("Вася", "корм", "доме", "дымчатый");
+        Dog dog = new Dog("Собака", "корм", "доме", true);
+        Horse horse = new Horse("Юлий", "яблоко", "конюшне", "Иванов С.А.");
+        Veterinarian veterinarian = new();
 
-        Reader[] readers ={ new Reader("Петров В.В.", 113300, "Математический", "3 февраля 2000"), 
-            new Reader("Иванов Д.А.", 330011, "Философский", "17 ноября 20001"), 
-            new Reader("Кузнецов А.А.", 110033, "Математический", "3 декабря 2007") 
-        };
+        cat.Eat();
+        cat.Sleep();
+        cat.MakeNoise();
+        Console.WriteLine();
 
+        dog.Eat();
+        dog.Sleep();
+        dog.MakeNoise();
+        Console.WriteLine();
 
-        readers[2].takeBook("Приключения", "Словарь", "Энциклопедия");
-        readers[2].takeBook(3);
-        readers[2].returnBook("Приключения", "Словарь", "Энциклопедия");
-        readers[2].returnBook(4);
+        horse.Eat();
+        horse.Sleep();
+        horse.MakeNoise();
+        Console.WriteLine();
 
-        students[1].Print();
-
+        veterinarian.treatAnimal(dog, cat, horse)
     }
 }
