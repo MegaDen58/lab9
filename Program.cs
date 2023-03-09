@@ -1,132 +1,132 @@
 ﻿using System;
 
-public class Animal
+
+abstract class Transport
 {
-    public string name;
-    public string food;
-    public string location;
-
-    public Animal(string name, string food, string location)
+    public Transport(string name, int speed, double weight, int distance)
     {
-        this.name = name;
-        this.food = food;
-        this.location = location;
+        Name = name;
+        Speed = speed;
+        Weight = weight;
+        Distance = distance;
+    }
+    public abstract string Name { get; set; }
+    public abstract int Speed { get; set; }
+    public abstract double Weight { get; set; }
+    public abstract int Distance { get; set; }
+}
+
+abstract class Auto : Transport
+{
+    public Auto(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public abstract void NameInfo();
+    public abstract void SpeedInfo();
+    public abstract void WeightInfo();
+    public abstract void DistanceInfo();
+}
+
+abstract class Airplane : Transport
+{
+    public Airplane(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public abstract void NameInfo();
+    public abstract void SpeedInfo();
+    public abstract void WeightInfo();
+    public abstract void DistanceInfo();
+}
+
+abstract class Ship : Transport
+{
+    public Ship(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public abstract void NameInfo();
+    public abstract void SpeedInfo();
+    public abstract void WeightInfo();
+    public abstract void DistanceInfo();
+}
+
+class Ford : Auto
+{
+    public Ford(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public override string Name { get; set; }
+    public override int Speed { get; set;}
+    public override double Weight { get; set;}
+    public override int Distance { get; set;}
+
+    public override void NameInfo()
+    {
+        Console.WriteLine($"Наименование авто: {Name}.");
     }
 
-    public virtual void MakeNoise()
+    public override void DistanceInfo()
     {
-        Console.WriteLine($"{name} шумит.");
+        Console.WriteLine($"Дистанция, проезжаемая автомобилем: {Distance} км.");
     }
 
-    public virtual void Eat()
+    public override void WeightInfo()
     {
-        Console.WriteLine($"{name} ест {food}.");
-
+        Console.WriteLine($"Грузоподъемность автомобиля: {Weight} тонн.");
     }
 
-    public virtual void Sleep()
+    public override void SpeedInfo()
     {
-        Console.WriteLine($"{name} спит в {location}.");
+        Console.WriteLine($"Скорость автомобиля: {Speed}");
     }
 }
 
-class Dog : Animal
+class Boieng : Airplane
 {
-    bool collar;
+    public Boieng(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public override string Name { get; set; }
+    public override int Speed { get; set; }
+    public override double Weight { get; set; }
+    public override int Distance { get; set; }
 
-    public Dog(string name, string food, string location, bool collar) : base(name, food, location)
+    public override void NameInfo()
     {
-        this.name = name;
-        this.food = food;
-        this.location = location;
-        this.collar = collar;
+        Console.WriteLine($"Наименование самолёта: {Name}.");
     }
 
-    public override void MakeNoise()
+    public override void DistanceInfo()
     {
-        Console.WriteLine($"Собака {name} гавкает.");
+        Console.WriteLine($"Дистанция, пролетаемая самолетом: {Distance} км.");
     }
 
-    public override void Eat()
+    public override void WeightInfo()
     {
-        Console.WriteLine($"Собака {name} ест {food}.");
-
+        Console.WriteLine($"Грузоподъемность самолёта: {Weight} тонн.");
     }
 
-    public override void Sleep()
+    public override void SpeedInfo()
     {
-        Console.WriteLine($"Собака {name} спит в  {location}.");
-
+        Console.WriteLine($"Скорость самолёта: {Speed}");
     }
 }
 
-class Cat : Animal
+class Titanic : Ship
 {
-    string CoatColor;
+    public Titanic(string name, int speed, double weight, int distance) : base(name, speed, weight, distance) { }
+    public override string Name { get; set; }
+    public override int Speed { get; set; }
+    public override double Weight { get; set; }
+    public override int Distance { get; set; }
 
-    public Cat(string name, string food, string location, string coatColor) : base(name, food, location)
+    public override void NameInfo()
     {
-        this.name = name;
-        this.food = food;
-        this.location = location;
-        this.CoatColor = coatColor;
+        Console.WriteLine($"Наименование корабля: {Name}.");
     }
 
-    public override void MakeNoise()
+    public override void DistanceInfo()
     {
-        Console.WriteLine($"Кот {name} мяукает.");
+        Console.WriteLine($"Дистанция, проходимая короблём: {Distance} км.");
     }
 
-    public override void Eat()
+    public override void WeightInfo()
     {
-        Console.WriteLine($"Кот {name} ест {food}.");
-
+        Console.WriteLine($"Грузоподъемность коробля: {Weight} тонн.");
     }
 
-    public override void Sleep()
+    public override void SpeedInfo()
     {
-        Console.WriteLine($"Кот {name} спит в {location}.");
-
-    }
-}
-
-class Horse : Animal
-{
-    string owner;
-
-    public Horse(string name, string food, string location, string owner) : base(name, food, location)
-    {
-        this.name = name;
-        this.food = food;
-        this.location = location;
-        this.owner = owner;
-    }
-
-    public override void MakeNoise()
-    {
-        Console.WriteLine($"Лошадь {name} издает звуки.");
-    }
-
-    public override void Eat()
-    {
-        Console.WriteLine($"Лошадь {name} ест {food}.");
-
-    }
-
-    public override void Sleep()
-    {
-        Console.WriteLine($"Лошадь {name} спит в {location}.");
-
-    }
-}
-
-class Veterinarian
-{
-    public void treatAnimal(params Animal[] animals)
-    {
-        foreach(Animal animal in animals){
-            Console.WriteLine($"Животное {animal.name}, живущее в {animal.location}, ест {animal.food}");
-        }
+        Console.WriteLine($"Скорость коробля: {Speed}");
     }
 }
 
@@ -134,26 +134,13 @@ public class Program
 {
     public static void Main()
     {
-        Cat cat = new Cat("Вася", "корм", "доме", "дымчатый");
-        Dog dog = new Dog("Собака", "корм", "доме", true);
-        Horse horse = new Horse("Юлий", "яблоко", "конюшне", "Иванов С.А.");
-        Veterinarian veterinarian = new();
+        Ford ford = new Ford("Ford", 100, 5, 500);
+        Boieng boieng = new Boieng("Boieng 777", 300, 1000, 10000);
+        Titanic titanic = new Titanic("Titanic", 200, 5000, 7000);
 
-        cat.Eat();
-        cat.Sleep();
-        cat.MakeNoise();
-        Console.WriteLine();
-
-        dog.Eat();
-        dog.Sleep();
-        dog.MakeNoise();
-        Console.WriteLine();
-
-        horse.Eat();
-        horse.Sleep();
-        horse.MakeNoise();
-        Console.WriteLine();
-
-        veterinarian.treatAnimal(dog, cat, horse)
+        ford.NameInfo();
+        ford.DistanceInfo();
+        ford.WeightInfo();
+        ford.SpeedInfo();
     }
 }
