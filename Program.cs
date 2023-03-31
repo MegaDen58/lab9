@@ -1,50 +1,58 @@
 ﻿using System;
 
-class Car
+class Class<T>
 {
-    public string Name { get; set; }
+    public List<T> list = new List<T>();
+    public List<T> login = new List<T>();
+    public List<T> password = new List<T>();
 
-    public Car(string name)
+    public void addNumber(params T[] value)
     {
-        Name = name;
-    }
-}
-
-class Garage
-{
-    public List<Car> cars = new List<Car>();
-
-    public Garage(params Car[] autos)
-    {
-        foreach (Car car in autos)
+        foreach (T a in value)
         {
-            cars.Add(car);
-        }
-    }
-}
-
-class Washer
-{
-    public void Wash(Car car)
-    {
-        Console.WriteLine($"Автомобиль {car.Name} помыт.");
-    }
-}
-
-class HelloWorld
-{
-    static void Main()
-    {
-        Garage garage = new Garage(new Car("Auto"), new Car("New Auto"));
-        Washer washer = new Washer();
-
-        CarWasher carWasher = washer.Wash;
-
-        foreach (Car car in garage.cars)
-        {
-            carWasher(car);
+            list.Add(a);
         }
     }
 
-    delegate void CarWasher(Car car);
+    public void deleteNumber(int number)
+    {
+        list.RemoveAt(number);
+    }
+
+    public T getNumber(int number)
+    {
+        return list[number];
+    }
+
+    public int getLenght()
+    {
+        return list.Count;
+    }
+}
+
+class User<T> : Class<T>
+{
+    public User(T login, T password) 
+    {
+        this.login.Add(login);
+        this.password.Add(password);
+    }
+}
+
+
+public class Program
+{
+    public static void Main()
+    {
+        Class<string> text = new Class<string>();
+        Class<int> number = new Class<int>();
+        Class<double> doubles = new Class<double>();
+
+        text.addNumber("tom", "text", "college");
+        number.addNumber(5, 10, 20);
+        doubles.addNumber(1.35, 0.66, 122.1);
+
+        User<string> first = new User<string>("ggff", "password123");
+        User<string> second = new User<string>("login", "123");
+    }
 }
