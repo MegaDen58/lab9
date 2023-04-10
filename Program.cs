@@ -1,5 +1,3 @@
-﻿using System;
-
 class Class<T>
 {
     public List<T> list = new List<T>();
@@ -30,9 +28,18 @@ class Class<T>
     }
 }
 
-class User<T> : Class<T>
+class User1<T> : Class<string>
 {
-    public User(T login, T password) 
+    public User1(string login, string password)
+    {
+        this.login.Add(login);
+        this.password.Add(password);
+    }
+}
+
+class User2<T> : Class<int>
+{
+    public User2(int login, int password)
     {
         this.login.Add(login);
         this.password.Add(password);
@@ -52,7 +59,7 @@ public class Program
         number.addNumber(5, 10, 20);
         doubles.addNumber(1.35, 0.66, 122.1);
 
-        User<string> first = new User<string>("ggff", "password123");
-        User<string> second = new User<string>("login", "123");
+        User1<string> first = new User1<string>("ggff", "password123");
+        User2<int> second = new User2<int>(555, 333);
     }
 }
